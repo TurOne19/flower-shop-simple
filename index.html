@@ -1,310 +1,1125 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Florista — Flower shop Tallinn</title>
-
-<style>
-/* ================= RESET ================= */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  color:#222;
-  line-height:1.6;
-}
-img{max-width:100%;display:block}
-section{padding:100px 20px}
-.container{max-width:1200px;margin:0 auto}
-
-/* ================= LANG ================= */
-.lang{
-  position:fixed;
-  top:20px;
-  right:20px;
-  display:flex;
-  gap:10px;
-  z-index:999;
-}
-.lang button{
-  padding:8px 14px;
-  border:none;
-  border-radius:20px;
-  background:#fff;
-  cursor:pointer;
-  font-weight:600;
-}
-
-/* ================= HERO ================= */
-.hero{
-  min-height:100vh;
-  background:linear-gradient(135deg,#e11d48,#fb7185);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-.hero h1{font-size:3.2rem;margin-bottom:20px}
-.hero p{font-size:1.3rem;margin-bottom:40px}
-.btn{
-  padding:16px 42px;
-  background:#fff;
-  color:#e11d48;
-  border-radius:50px;
-  font-weight:600;
-  text-decoration:none;
-}
-
-/* ================= HOW ================= */
-.how{
-  background:#fff;
-}
-.how-item{
-  text-align:center;
-  margin-bottom:50px;
-}
-.how-num{
-  font-size:4rem;
-  color:#fda4af;
-  margin-bottom:10px;
-}
-
-/* ================= CATALOG ================= */
-.filters{
-  display:flex;
-  gap:15px;
-  justify-content:center;
-  margin-bottom:50px;
-  flex-wrap:wrap;
-}
-.filters button{
-  padding:12px 24px;
-  border:none;
-  border-radius:30px;
-  background:#f3f4f6;
-  cursor:pointer;
-}
-.filters button.active{
-  background:#e11d48;
-  color:#fff;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
-}
-
-.card{
-  background:#fff;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  overflow:hidden;
-}
-.card-body{padding:25px}
-.price{color:#e11d48;font-weight:700;font-size:1.2rem}
-
-/* ================= REVIEWS ================= */
-.reviews{
-  background:#fff1f2;
-}
-.review{
-  background:#fff;
-  padding:30px;
-  border-radius:20px;
-}
-
-/* ================= TRUST ================= */
-.trust{
-  background:#e11d48;
-  color:#fff;
-  text-align:center;
-}
-.trust-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:40px;
-}
-
-/* ================= CONTACTS ================= */
-.contacts p{text-align:center;font-size:1.1rem}
-
-/* ================= FOOTER ================= */
-footer{
-  background:#111;
-  color:#aaa;
-  text-align:center;
-  padding:40px;
-}
-
-/* ================= RESPONSIVE ================= */
-@media(max-width:768px){
-  .hero h1{font-size:2.2rem}
-  section{padding:70px 20px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florista - Цветочный магазин в Таллине</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .hero-bg { background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%); }
+        .gradient-bg { background: linear-gradient(135deg, #e11d48 0%, #ec4899 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .img-hover { transition: transform 0.5s ease; }
+        .img-hover:hover { transform: scale(1.1); }
+        .rotate-180 { transform: rotate(180deg); }
+        .hidden { display: none; }
+        .modal-backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+        .lang-btn.active { background: #e11d48; color: white; }
+    </style>
 </head>
-
 <body>
 
-<!-- LANG -->
-<div class="lang">
-  <button onclick="setLang('ru')">RU</button>
-  <button onclick="setLang('ee')">EE</button>
-  <button onclick="setLang('en')">EN</button>
+<!-- Navigation -->
+<nav class="fixed top-0 w-full bg-white/95 shadow-sm z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <button onclick="showPage('home')" class="text-2xl font-light tracking-wide text-rose-600">Florista</button>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8">
+                <button onclick="showPage('home')" class="nav-link text-gray-700 hover:text-rose-600 transition" data-i18n="nav.home">Главная</button>
+                <button onclick="showPage('catalog')" class="nav-link text-gray-700 hover:text-rose-600 transition" data-i18n="nav.catalog">Каталог</button>
+                <button onclick="showPage('about')" class="nav-link text-gray-700 hover:text-rose-600 transition" data-i18n="nav.about">О нас</button>
+                <button onclick="showPage('delivery')" class="nav-link text-gray-700 hover:text-rose-600 transition" data-i18n="nav.delivery">Доставка</button>
+                <button onclick="showPage('contacts')" class="nav-link text-gray-700 hover:text-rose-600 transition" data-i18n="nav.contacts">Контакты</button>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="hidden md:flex items-center space-x-2 mr-4">
+                <button onclick="changeLanguage('ru')" class="lang-btn px-3 py-1 rounded-full text-sm hover:bg-rose-100 transition active">RU</button>
+                <button onclick="changeLanguage('en')" class="lang-btn px-3 py-1 rounded-full text-sm hover:bg-rose-100 transition">EN</button>
+                <button onclick="changeLanguage('et')" class="lang-btn px-3 py-1 rounded-full text-sm hover:bg-rose-100 transition">ET</button>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="tel:+3725551234" class="flex items-center text-gray-700 hover:text-rose-600 transition">
+                    <span class="mr-2">📞</span> +372 555 1234
+                </a>
+                <button onclick="openModal()" class="bg-rose-600 text-white px-6 py-2 rounded-full hover:bg-rose-700 transition" data-i18n="buttons.order">Заказать</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden">
+                <span id="menuIcon">☰</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden pb-4">
+            <button onclick="showPage('home'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-700" data-i18n="nav.home">Главная</button>
+            <button onclick="showPage('catalog'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-700" data-i18n="nav.catalog">Каталог</button>
+            <button onclick="showPage('about'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-700" data-i18n="nav.about">О нас</button>
+            <button onclick="showPage('delivery'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-700" data-i18n="nav.delivery">Доставка</button>
+            <button onclick="showPage('contacts'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-700" data-i18n="nav.contacts">Контакты</button>
+            <div class="flex space-x-2 mt-4">
+                <button onclick="changeLanguage('ru')" class="lang-btn px-3 py-1 rounded-full text-sm hover:bg-rose-100 transition active">RU</button>
+                <button onclick="changeLanguage('en')" class="lang-btn px-3 py-1 rounded-full text-sm hover:bg-rose-100 transition">EN</button>
+                <button onclick="changeLanguage('et')" class="lang-btn px-3 py-1 rounded-full text-sm hover:bg-rose-100 transition">ET</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="page">
+    <!-- Hero Section -->
+    <section class="hero-bg relative h-screen flex items-center justify-center overflow-hidden" style="margin-top: 64px;">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-rose-300 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-pink-200 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative text-center px-4 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-light text-gray-800 mb-6 leading-tight" data-i18n="hero.title">
+                Цветы, которые<br/>говорят за вас
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 font-light" data-i18n="hero.subtitle">
+                Свежие композиции с доставкой по Таллину за 2 часа
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openModal()" class="bg-rose-600 text-white px-8 py-4 rounded-full text-lg hover:bg-rose-700 transition transform hover:scale-105" data-i18n="buttons.order">
+                    Заказать букет
+                </button>
+                <button onclick="showPage('catalog')" class="border-2 border-rose-600 text-rose-600 px-8 py-4 rounded-full text-lg hover:bg-rose-50 transition" data-i18n="buttons.catalog">
+                    Смотреть каталог
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center p-6 rounded-2xl hover:bg-rose-50 transition">
+                    <div class="text-5xl mb-4">🚚</div>
+                    <h3 class="text-xl font-medium text-gray-800 mb-2" data-i18n="advantages.delivery.title">Доставка 2 часа</h3>
+                    <p class="text-gray-600" data-i18n="advantages.delivery.desc">Срочная доставка по Таллину</p>
+                </div>
+                <div class="text-center p-6 rounded-2xl hover:bg-rose-50 transition">
+                    <div class="text-5xl mb-4">🌸</div>
+                    <h3 class="text-xl font-medium text-gray-800 mb-2" data-i18n="advantages.fresh.title">Свежие цветы</h3>
+                    <p class="text-gray-600" data-i18n="advantages.fresh.desc">Ежедневные поставки из Голландии</p>
+                </div>
+                <div class="text-center p-6 rounded-2xl hover:bg-rose-50 transition">
+                    <div class="text-5xl mb-4">✨</div>
+                    <h3 class="text-xl font-medium text-gray-800 mb-2" data-i18n="advantages.florists.title">Опытные флористы</h3>
+                    <p class="text-gray-600" data-i18n="advantages.florists.desc">Более 10 лет создаем красоту</p>
+                </div>
+                <div class="text-center p-6 rounded-2xl hover:bg-rose-50 transition">
+                    <div class="text-5xl mb-4">✓</div>
+                    <h3 class="text-xl font-medium text-gray-800 mb-2" data-i18n="advantages.guarantee.title">Гарантия качества</h3>
+                    <p class="text-gray-600" data-i18n="advantages.guarantee.desc">Замена цветов в течение 3 дней</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Bouquets -->
+    <section class="py-20 bg-gradient-to-b from-white to-rose-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-light text-center mb-12 text-gray-800" data-i18n="sections.popular">Популярные букеты</h2>
+            <div class="grid md:grid-cols-3 gap-8" id="popularBouquets"></div>
+            <div class="text-center mt-12">
+                <button onclick="showPage('catalog')" class="border-2 border-rose-600 text-rose-600 px-8 py-3 rounded-full hover:bg-rose-50 transition inline-flex items-center" data-i18n="buttons.allBouquets">
+                    Все букеты →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-light text-center mb-12 text-gray-800" data-i18n="sections.howWeWork">Как мы работаем</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-light text-rose-200 mb-4">01</div>
+                    <h3 class="text-xl font-medium mb-2 text-gray-800" data-i18n="steps.step1.title">Выберите букет</h3>
+                    <p class="text-gray-600" data-i18n="steps.step1.desc">Из каталога или опишите свои пожелания</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-light text-rose-200 mb-4">02</div>
+                    <h3 class="text-xl font-medium mb-2 text-gray-800" data-i18n="steps.step2.title">Оформите заказ</h3>
+                    <p class="text-gray-600" data-i18n="steps.step2.desc">Онлайн, по телефону или в WhatsApp</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-light text-rose-200 mb-4">03</div>
+                    <h3 class="text-xl font-medium mb-2 text-gray-800" data-i18n="steps.step3.title">Мы создаем</h3>
+                    <p class="text-gray-600" data-i18n="steps.step3.desc">Флористы соберут композицию с душой</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-light text-rose-200 mb-4">04</div>
+                    <h3 class="text-xl font-medium mb-2 text-gray-800" data-i18n="steps.step4.title">Доставим</h3>
+                    <p class="text-gray-600" data-i18n="steps.step4.desc">В указанное время и место</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="py-20 bg-rose-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-light text-center mb-12 text-gray-800" data-i18n="sections.reviews">Отзывы клиентов</h2>
+            <div class="grid md:grid-cols-3 gap-8" id="reviewsContainer"></div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="gradient-bg rounded-3xl p-12 text-white text-center">
+                <h2 class="text-4xl font-light mb-8" data-i18n="trust.title">Нам доверяют</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-5xl font-light mb-2">10+</div>
+                        <div class="text-rose-100" data-i18n="trust.years">лет работы</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-light mb-2">5000+</div>
+                        <div class="text-rose-100" data-i18n="trust.clients">довольных клиентов</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-light mb-2">100%</div>
+                        <div class="text-rose-100" data-i18n="trust.guarantee">гарантия свежести</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Form -->
+    <section class="py-20 bg-gradient-to-b from-white to-rose-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+                <h2 class="text-3xl font-light text-center mb-8 text-gray-800" data-i18n="form.title">Оставьте заявку</h2>
+                <form onsubmit="submitForm(event)" class="space-y-4">
+                    <input type="text" placeholder="Ваше имя" data-i18n-placeholder="form.name" class="w-full px-6 py-4 border border-gray-200 rounded-full focus:outline-none focus:border-rose-600 transition" required>
+                    <input type="tel" placeholder="Телефон" data-i18n-placeholder="form.phone" class="w-full px-6 py-4 border border-gray-200 rounded-full focus:outline-none focus:border-rose-600 transition" required>
+                    <textarea placeholder="Сообщение" data-i18n-placeholder="form.message" class="w-full px-6 py-4 border border-gray-200 rounded-2xl focus:outline-none focus:border-rose-600 transition h-32 resize-none"></textarea>
+                    <button type="submit" class="w-full bg-rose-600 text-white py-4 rounded-full hover:bg-rose-700 transition text-lg" data-i18n="form.submit">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-<div>
-  <h1 data-lang="ru">Цветы, которые говорят за вас</h1>
-  <h1 data-lang="ee">Lilled, mis räägivad teie eest</h1>
-  <h1 data-lang="en">Flowers that speak for you</h1>
+<!-- CATALOG PAGE -->
+<div id="catalogPage" class="page hidden">
+    <div class="pt-24 pb-20 bg-gradient-to-b from-rose-50 to-white min-h-screen">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-5xl font-light text-center mb-8 text-gray-800" data-i18n="catalog.title">Каталог букетов</h1>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button onclick="filterBouquets('all')" class="filter-btn active px-6 py-3 rounded-full transition bg-rose-600 text-white" data-i18n="catalog.filters.all">Все букеты</button>
+                <button onclick="filterBouquets('romance')" class="filter-btn px-6 py-3 rounded-full transition bg-white text-gray-700 hover:bg-rose-50" data-i18n="catalog.filters.romance">Для романтики</button>
+                <button onclick="filterBouquets('birthday')" class="filter-btn px-6 py-3 rounded-full transition bg-white text-gray-700 hover:bg-rose-50" data-i18n="catalog.filters.birthday">На день рождения</button>
+                <button onclick="filterBouquets('wedding')" class="filter-btn px-6 py-3 rounded-full transition bg-white text-gray-700 hover:bg-rose-50" data-i18n="catalog.filters.wedding">На свадьбу</button>
+            </div>
 
-  <p data-lang="ru">Доставка по Таллину за 2 часа</p>
-  <p data-lang="ee">Tarne Tallinnas 2 tunniga</p>
-  <p data-lang="en">Delivery in Tallinn within 2 hours</p>
-
-  <a href="#catalog" class="btn">Каталог</a>
-</div>
-</section>
-
-<!-- HOW -->
-<section class="how">
-<div class="container">
-<h2>Как мы работаем</h2>
-
-<div class="how-item">
-<div class="how-num">01</div>
-<h3>Выберите букет</h3>
-<p>Из каталога или опишите пожелания</p>
+            <div class="grid md:grid-cols-3 gap-8" id="catalogBouquets"></div>
+        </div>
+    </div>
 </div>
 
-<div class="how-item">
-<div class="how-num">02</div>
-<h3>Оформите заказ</h3>
-<p>Онлайн или по телефону</p>
+<!-- BOUQUET DETAIL PAGE -->
+<div id="bouquetPage" class="page hidden">
+    <div class="pt-24 pb-20 bg-white min-h-screen">
+        <div class="max-w-6xl mx-auto px-4">
+            <button onclick="showPage('catalog')" class="text-rose-600 mb-8 flex items-center hover:underline">
+                ← <span data-i18n="buttons.back">Назад в каталог</span>
+            </button>
+            
+            <div id="bouquetDetail"></div>
+        </div>
+    </div>
 </div>
 
-<div class="how-item">
-<div class="how-num">03</div>
-<h3>Мы создаем</h3>
-<p>Флористы собирают с душой</p>
+<!-- ABOUT PAGE -->
+<div id="aboutPage" class="page hidden">
+    <div class="pt-24 pb-20 bg-gradient-to-b from-rose-50 to-white min-h-screen">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl font-light text-center mb-12 text-gray-800" data-i18n="about.title">О нас</h1>
+            
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg mb-12">
+                <h2 class="text-3xl font-light mb-6 text-gray-800" data-i18n="about.history.title">Наша история</h2>
+                <p class="text-gray-700 text-lg leading-relaxed mb-6" data-i18n="about.history.p1">
+                    Florista — это семейный цветочный магазин с более чем 10-летней историей в Таллине. Мы начинали с маленькой студии и большой любви к цветам, а сегодня радуем тысячи клиентов по всей Эстонии.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed mb-6" data-i18n="about.history.p2">
+                    Каждый букет мы создаем с душой, используя только свежие цветы из лучших питомников Голландии. Наши флористы — настоящие мастера своего дела, прошедшие обучение в европейских школах флористики.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed" data-i18n="about.history.p3">
+                    Мы верим, что цветы — это язык эмоций. Поэтому наша миссия — помогать вам выражать чувства через красоту природы.
+                </p>
+            </div>
+
+            <div class="gradient-bg rounded-3xl p-12 text-white">
+                <h2 class="text-3xl font-light mb-8 text-center" data-i18n="about.guarantees">Наши гарантии</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="text-5xl font-light mb-2">10+</div>
+                        <div class="text-rose-100" data-i18n="about.stat1">лет опыта</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-light mb-2">5000+</div>
+                        <div class="text-rose-100" data-i18n="about.stat2">счастливых клиентов</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-light mb-2">3 <span data-i18n="about.stat3days">дня</span></div>
+                        <div class="text-rose-100" data-i18n="about.stat3">гарантия свежести</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="how-item">
-<div class="how-num">04</div>
-<h3>Доставим</h3>
-<p>В указанное время</p>
+<!-- DELIVERY PAGE -->
+<div id="deliveryPage" class="page hidden">
+    <div class="pt-24 pb-20 bg-white min-h-screen">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl font-light text-center mb-12 text-gray-800" data-i18n="delivery.title">Доставка и оплата</h1>
+            
+            <div class="bg-rose-50 rounded-3xl p-8 md:p-12 mb-12">
+                <h2 class="text-3xl font-light mb-6 text-gray-800" data-i18n="delivery.conditions.title">Условия доставки</h2>
+                <div class="space-y-4 text-gray-700 text-lg">
+                    <p>📍 <strong data-i18n="delivery.conditions.zone.title">Зона доставки:</strong> <span data-i18n="delivery.conditions.zone.desc">Таллин и пригороды (радиус 15 км)</span></p>
+                    <p>🚚 <strong data-i18n="delivery.conditions.cost.title">Стоимость:</strong> <span data-i18n="delivery.conditions.cost.desc">от 5€ (зависит от района)</span></p>
+                    <p>⏱️ <strong data-i18n="delivery.conditions.time.title">Время доставки:</strong> <span data-i18n="delivery.conditions.time.desc">при заказе до 14:00 — доставка в тот же день</span></p>
+                    <p>⚡ <strong data-i18n="delivery.conditions.urgent.title">Срочная доставка:</strong> <span data-i18n="delivery.conditions.urgent.desc">от 2 часов (+10€ к стоимости)</span></p>
+                    <p>💳 <strong data-i18n="delivery.conditions.payment.title">Оплата:</strong> <span data-i18n="delivery.conditions.payment.desc">наличные, карта, банковский перевод</span></p>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h2 class="text-3xl font-light mb-8 text-gray-800" data-i18n="delivery.faq.title">Часто задаваемые вопросы</h2>
+                <div class="space-y-4" id="faqContainer"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- CONTACTS PAGE -->
+<div id="contactsPage" class="page hidden">
+    <div class="pt-24 pb-20 bg-gradient-to-b from-rose-50 to-white min-h-screen">
+        <div class="max-w-6xl mx-auto px-4">
+            <h1 class="text-5xl font-light text-center mb-12 text-gray-800" data-i18n="contacts.title">Контакты</h1>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <div class="bg-white rounded-3xl p-8 shadow-lg mb-8">
+                        <h2 class="text-2xl font-light mb-6 text-gray-800" data-i18n="contacts.connect">Свяжитесь с нами</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <span class="text-2xl mr-4 mt-1">📞</span>
+                                <div>
+                                    <div class="font-medium text-gray-800" data-i18n="contacts.phone.title">Телефон</div>
+                                    <a href="tel:+3725551234" class="text-gray-600 hover:text-rose-600">+372 555 1234</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <span class="text-2xl mr-4 mt-1">✉️</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">Email</div>
+                                    <a href="mailto:info@florista.ee" class="text-gray-600 hover:text-rose-600">info@florista.ee</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <span class="text-2xl mr-4 mt-1">📍</span>
+                                <div>
+                                    <div class="font-medium text-gray-800" data-i18n="contacts.address.title">Адрес</div>
+                                    <p class="text-gray-600">Narva mnt 7, 10117 Tallinn, Estonia</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <span class="text-2xl mr-4 mt-1">🕐</span>
+                                <div>
+                                    <div class="font-medium text-gray-800" data-i18n="contacts.hours.title">Часы работы</div>
+                                    <p class="text-gray-600" data-i18n="contacts.hours.weekdays">Пн-Пт: 9:00 - 20:00</p>
+                                    <p class="text-gray-600" data-i18n="contacts.hours.weekend">Сб-Вс: 10:00 - 18:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-8 border-t border-gray-200">
+                            <h3 class="font-medium text-gray-800 mb-4" data-i18n="contacts.social">Мы в соцсетях</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://instagram.com" target="_blank" class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center hover:bg-rose-600 hover:text-white transition text-2xl">📷</a>
+                                <a href="https://wa.me/3725551234" target="_blank" class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition text-2xl">💬</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-2 shadow-lg h-64">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2028.5892837393847!2d24.753574!3d59.436962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4692eb3d9d4c6c6d%3A0x3e1f7b6e5e5e5e5e!2sNarva%20mnt%207%2C%20Tallinn!5e0!3m2!1sen!2see!4v1234567890" width="100%" height="100%" style="border:0; border-radius: 1.5rem;" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-3xl p-8 shadow-lg">
+                    <h2 class="text-2xl font-light mb-6 text-gray-800" data-i18n="contacts.form.title">Форма обратной связи</h2>
+                    <form onsubmit="submitForm(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-i18n="form.name">Ваше имя</label>
+                            <input type="text" class="w-full px-6 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-rose-600 transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-i18n="form.phone">Телефон</label>
+                            <input type="tel" class="w-full px-6 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-rose-600 transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-i18n="form.message">Сообщение</label>
+                            <textarea class="w-full px-6 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-rose-600 transition h-32 resize-none" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-rose-600 text-white py-4 rounded-full hover:bg-rose-700 transition text-lg" data-i18n="form.submit">Отправить сообщение</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</section>
 
-<!-- CATALOG -->
-<section id="catalog">
-<div class="container">
-<h2>Каталог букетов</h2>
-
-<div class="filters">
-<button class="active" onclick="filter('all')">Все</button>
-<button onclick="filter('romance')">Романтика</button>
-<button onclick="filter('birthday')">ДР</button>
-<button onclick="filter('wedding')">Свадьба</button>
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full relative">
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
+        
+        <h2 class="text-3xl font-light mb-6 text-gray-800" data-i18n="modal.title">Заказать букет</h2>
+        
+        <form onsubmit="submitForm(event)" class="space-y-4">
+            <input type="text" placeholder="Ваше имя" data-i18n-placeholder="form.name" class="w-full px-6 py-3 border border-gray-200 rounded-full focus:outline-none focus:border-rose-600 transition" required>
+            <input type="tel" placeholder="Телефон" data-i18n-placeholder="form.phone" class="w-full px-6 py-3 border border-gray-200 rounded-full focus:outline-none focus:border-rose-600 transition" required>
+            <textarea placeholder="Опишите желаемый букет" data-i18n-placeholder="modal.describe" class="w-full px-6 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-rose-600 transition h-32 resize-none"></textarea>
+            <button type="submit" class="w-full bg-rose-600 text-white py-4 rounded-full hover:bg-rose-700 transition text-lg" data-i18n="form.submit">Отправить заявку</button>
+        </form>
+        
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <p class="text-center text-gray-600 mb-4" data-i18n="modal.or">Или свяжитесь с нами:</p>
+            <div class="flex gap-4">
+                <a href="https://wa.me/3725551234" target="_blank" class="flex-1 border-2 border-green-600 text-green-600 py-3 rounded-full hover:bg-green-50 transition flex items-center justify-center">
+                    <span class="mr-2">💬</span> WhatsApp
+                </a>
+                <a href="tel:+3725551234" class="flex-1 border-2 border-rose-600 text-rose-600 py-3 rounded-full hover:bg-rose-50 transition flex items-center justify-center">
+                    <span class="mr-2">📞</span> <span data-i18n="modal.call">Позвонить</span>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="grid">
-
-<div class="card bouquet romance">
-<img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600">
-<div class="card-body">
-<h3>Романтичное признание</h3>
-<p class="price">45€</p>
-</div>
-</div>
-
-<div class="card bouquet birthday">
-<img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600">
-<div class="card-body">
-<h3>Весенняя свежесть</h3>
-<p class="price">38€</p>
-</div>
-</div>
-
-<div class="card bouquet wedding">
-<img src="https://images.unsplash.com/photo-1464297162577-f5295c892194?w=600">
-<div class="card-body">
-<h3>Пионовая роскошь</h3>
-<p class="price">65€</p>
-</div>
-</div>
-
-</div>
-</div>
-</section>
-
-<!-- REVIEWS -->
-<section class="reviews">
-<div class="container">
-<h2>Отзывы клиентов</h2>
-
-<div class="grid">
-<div class="review">
-⭐⭐⭐⭐⭐
-<p>Очень красивые цветы, доставили вовремя!</p>
-<strong>Анна К.</strong>
-</div>
-
-<div class="review">
-⭐⭐⭐⭐⭐
-<p>Доставили за 2 часа, девушка в восторге</p>
-<strong>Дмитрий М.</strong>
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- TRUST -->
-<section class="trust">
-<div class="container trust-grid">
-<div><h2>10+</h2><p>лет работы</p></div>
-<div><h2>5000+</h2><p>клиентов</p></div>
-<div><h2>100%</h2><p>гарантия свежести</p></div>
-</div>
-</section>
-
-<!-- CONTACTS -->
-<section class="contacts">
-<div class="container">
-<h2>Контакты</h2>
-<p>📞 +372 555 1234</p>
-<p>📍 Tallinn</p>
-<p>📧 info@florista.ee</p>
-</div>
-</section>
-
-<footer>
-Florista © 2026
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-2xl font-light mb-4">Florista</h3>
+                <p class="text-gray-400" data-i18n="footer.tagline">Цветочный магазин премиум-класса в Таллине</p>
+            </div>
+            
+            <div>
+                <h4 class="font-medium mb-4" data-i18n="footer.navigation">Навигация</h4>
+                <div class="space-y-2">
+                    <button onclick="showPage('home')" class="block text-gray-400 hover:text-white transition" data-i18n="nav.home">Главная</button>
+                    <button onclick="showPage('catalog')" class="block text-gray-400 hover:text-white transition" data-i18n="nav.catalog">Каталог</button>
+                    <button onclick="showPage('about')" class="block text-gray-400 hover:text-white transition" data-i18n="nav.about">О нас</button>
+                    <button onclick="showPage('delivery')" class="block text-gray-400 hover:text-white transition" data-i18n="nav.delivery">Доставка</button>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-medium mb-4" data-i18n="contacts.title">Контакты</h4>
+                <div class="space-y-2 text-gray-400">
+                    <p>+372 555 1234</p>
+                    <p>info@florista.ee</p>
+                    <p>Narva mnt 7, Tallinn</p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-medium mb-4" data-i18n="contacts.social">Мы в соцсетях</h4>
+                <div class="flex space-x-4">
+                    <a href="https://instagram.com" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-rose-600 transition text-xl">📷</a>
+                    <a href="https://wa.me/3725551234" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-green-600 transition text-xl">💬</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p data-i18n="footer.copyright">&copy; 2026 Florista. Все права защищены.</p>
+        </div>
+    </div>
 </footer>
 
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/3725551234" target="_blank" class="fixed bottom-8 right-8 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition transform hover:scale-110 z-40 text-3xl">
+    💬
+</a>
+
 <script>
-function setLang(lang){
-  document.querySelectorAll('[data-lang]').forEach(el=>{
-    el.style.display = el.dataset.lang===lang?'block':'none'
-  })
-}
-setLang('ru')
+// Translations
+const translations = {
+    ru: {
+        nav: {
+            home: 'Главная',
+            catalog: 'Каталог',
+            about: 'О нас',
+            delivery: 'Доставка',
+            contacts: 'Контакты'
+        },
+        hero: {
+            title: 'Цветы, которые<br/>говорят за вас',
+            subtitle: 'Свежие композиции с доставкой по Таллину за 2 часа'
+        },
+        buttons: {
+            order: 'Заказать букет',
+            catalog: 'Смотреть каталог',
+            allBouquets: 'Все букеты →',
+            back: 'Назад в каталог',
+            details: 'Подробнее'
+        },
+        advantages: {
+            delivery: { title: 'Доставка 2 часа', desc: 'Срочная доставка по Таллину' },
+            fresh: { title: 'Свежие цветы', desc: 'Ежедневные поставки из Голландии' },
+            florists: { title: 'Опытные флористы', desc: 'Более 10 лет создаем красоту' },
+            guarantee: { title: 'Гарантия качества', desc: 'Замена цветов в течение 3 дней' }
+        },
+        sections: {
+            popular: 'Популярные букеты',
+            howWeWork: 'Как мы работаем',
+            reviews: 'Отзывы клиентов'
+        },
+        steps: {
+            step1: { title: 'Выберите букет', desc: 'Из каталога или опишите свои пожелания' },
+            step2: { title: 'Оформите заказ', desc: 'Онлайн, по телефону или в WhatsApp' },
+            step3: { title: 'Мы создаем', desc: 'Флористы соберут композицию с душой' },
+            step4: { title: 'Доставим', desc: 'В указанное время и место' }
+        },
+        trust: {
+            title: 'Нам доверяют',
+            years: 'лет работы',
+            clients: 'довольных клиентов',
+            guarantee: 'гарантия свежести'
+        },
+        form: {
+            title: 'Оставьте заявку',
+            name: 'Ваше имя',
+            phone: 'Телефон',
+            message: 'Сообщение',
+            submit: 'Отправить заявку'
+        },
+        catalog: {
+            title: 'Каталог букетов',
+            filters: {
+                all: 'Все букеты',
+                romance: 'Для романтики',
+                birthday: 'На день рождения',
+                wedding: 'На свадьбу'
+            }
+        },
+        bouquets: {
+            1: { name: 'Романтичное признание', desc: 'Нежная композиция из роз и эвкалипта', includes: 'В букет входит:' },
+            2: { name: 'Весенняя свежесть', desc: 'Яркий микс тюльпанов и фрезий', includes: 'В букет входит:' },
+            3: { name: 'Пионовая роскошь', desc: 'Премиум композиция из пионов', includes: 'В букет входит:' },
+            4: { name: 'Солнечный день', desc: 'Жизнерадостная композиция из подсолнухов', includes: 'В букет входит:' },
+            5: { name: 'Нежность', desc: 'Пастельная композиция в розовых тонах', includes: 'В букет входит:' },
+            6: { name: 'Классика', desc: 'Элегантный букет из красных роз', includes: 'В букет входит:' }
+        },
+        reviews: {
+            1: { name: 'Анна К.', text: 'Заказывала букет для мамы на день рождения. Доставили вовремя, цветы свежайшие! Спасибо!' },
+            2: { name: 'Дмитрий М.', text: 'Отличный сервис! Помогли выбрать букет, доставили за 2 часа. Девушка была в восторге.' },
+            3: { name: 'Елена Р.', text: 'Очень красивые композиции, профессиональные флористы. Буду заказывать еще!' }
+        },
+        about: {
+            title: 'О нас',
+            history: {
+                title: 'Наша история',
+                p1: 'Florista — это семейный цветочный магазин с более чем 10-летней историей в Таллине. Мы начинали с маленькой студии и большой любви к цветам, а сегодня радуем тысячи клиентов по всей Эстонии.',
+                p2: 'Каждый букет мы создаем с душой, используя только свежие цветы из лучших питомников Голландии. Наши флористы — настоящие мастера своего дела, прошедшие обучение в европейских школах флористики.',
+                p3: 'Мы верим, что цветы — это язык эмоций. Поэтому наша миссия — помогать вам выражать чувства через красоту природы.'
+            },
+            guarantees: 'Наши гарантии',
+            stat1: 'лет опыта',
+            stat2: 'счастливых клиентов',
+            stat3: 'гарантия свежести',
+            stat3days: 'дня'
+        },
+        delivery: {
+            title: 'Доставка и оплата',
+            conditions: {
+                title: 'Условия доставки',
+                zone: { title: 'Зона доставки:', desc: 'Таллин и пригороды (радиус 15 км)' },
+                cost: { title: 'Стоимость:', desc: 'от 5€ (зависит от района)' },
+                time: { title: 'Время доставки:', desc: 'при заказе до 14:00 — доставка в тот же день' },
+                urgent: { title: 'Срочная доставка:', desc: 'от 2 часов (+10€ к стоимости)' },
+                payment: { title: 'Оплата:', desc: 'наличные, карта, банковский перевод' }
+            },
+            faq: { title: 'Часто задаваемые вопросы' }
+        },
+        faqs: {
+            1: { q: 'Как быстро вы можете доставить букет?', a: 'При заказе до 14:00 доставляем в тот же день. Срочная доставка — от 2 часов.' },
+            2: { q: 'Какая зона доставки?', a: 'Мы доставляем по всему Таллину и ближайшим районам в радиусе 15 км.' },
+            3: { q: 'Можно ли изменить состав букета?', a: 'Да, наши флористы создадут индивидуальную композицию по вашим пожеланиям.' },
+            4: { q: 'Как оплатить заказ?', a: 'Принимаем наличные, карты, переводы. Оплата при получении или онлайн.' }
+        },
+        contacts: {
+            title: 'Контакты',
+            connect: 'Свяжитесь с нами',
+            phone: { title: 'Телефон' },
+            address: { title: 'Адрес' },
+            hours: { title: 'Часы работы', weekdays: 'Пн-Пт: 9:00 - 20:00', weekend: 'Сб-Вс: 10:00 - 18:00' },
+            social: 'Мы в соцсетях',
+            form: { title: 'Форма обратной связи' }
+        },
+        modal: {
+            title: 'Заказать букет',
+            describe: 'Опишите желаемый букет',
+            or: 'Или свяжитесь с нами:',
+            call: 'Позвонить'
+        },
+        footer: {
+            tagline: 'Цветочный магазин премиум-класса в Таллине',
+            navigation: 'Навигация',
+            copyright: '© 2026 Florista. Все права защищены.'
+        }
+    },
+    en: {
+        nav: {
+            home: 'Home',
+            catalog: 'Catalog',
+            about: 'About',
+            delivery: 'Delivery',
+            contacts: 'Contacts'
+        },
+        hero: {
+            title: 'Flowers that<br/>speak for you',
+            subtitle: 'Fresh compositions with delivery in Tallinn within 2 hours'
+        },
+        buttons: {
+            order: 'Order Bouquet',
+            catalog: 'View Catalog',
+            allBouquets: 'All Bouquets →',
+            back: 'Back to Catalog',
+            details: 'Details'
+        },
+        advantages: {
+            delivery: { title: '2-Hour Delivery', desc: 'Express delivery in Tallinn' },
+            fresh: { title: 'Fresh Flowers', desc: 'Daily supplies from Holland' },
+            florists: { title: 'Experienced Florists', desc: 'Over 10 years of creating beauty' },
+            guarantee: { title: 'Quality Guarantee', desc: 'Flower replacement within 3 days' }
+        },
+        sections: {
+            popular: 'Popular Bouquets',
+            howWeWork: 'How We Work',
+            reviews: 'Customer Reviews'
+        },
+        steps: {
+            step1: { title: 'Choose a Bouquet', desc: 'From catalog or describe your wishes' },
+            step2: { title: 'Place Order', desc: 'Online, by phone or WhatsApp' },
+            step3: { title: 'We Create', desc: 'Florists will arrange with love' },
+            step4: { title: 'Delivery', desc: 'At specified time and place' }
+        },
+        trust: {
+            title: 'Trusted by Thousands',
+            years: 'years of work',
+            clients: 'happy clients',
+            guarantee: 'freshness guarantee'
+        },
+        form: {
+            title: 'Leave a Request',
+            name: 'Your Name',
+            phone: 'Phone',
+            message: 'Message',
+            submit: 'Submit Request'
+        },
+        catalog: {
+            title: 'Bouquet Catalog',
+            filters: {
+                all: 'All Bouquets',
+                romance: 'For Romance',
+                birthday: 'For Birthday',
+                wedding: 'For Wedding'
+            }
+        },
+        bouquets: {
+            1: { name: 'Romantic Declaration', desc: 'Tender composition of roses and eucalyptus', includes: 'Includes:' },
+            2: { name: 'Spring Freshness', desc: 'Bright mix of tulips and freesias', includes: 'Includes:' },
+            3: { name: 'Peony Luxury', desc: 'Premium peony composition', includes: 'Includes:' },
+            4: { name: 'Sunny Day', desc: 'Cheerful sunflower composition', includes: 'Includes:' },
+            5: { name: 'Tenderness', desc: 'Pastel composition in pink tones', includes: 'Includes:' },
+            6: { name: 'Classic', desc: 'Elegant bouquet of red roses', includes: 'Includes:' }
+        },
+        reviews: {
+            1: { name: 'Anna K.', text: 'Ordered a bouquet for mom\'s birthday. Delivered on time, flowers super fresh! Thank you!' },
+            2: { name: 'Dmitry M.', text: 'Excellent service! Helped choose a bouquet, delivered in 2 hours. My girlfriend was thrilled.' },
+            3: { name: 'Elena R.', text: 'Very beautiful compositions, professional florists. Will order again!' }
+        },
+        about: {
+            title: 'About Us',
+            history: {
+                title: 'Our Story',
+                p1: 'Florista is a family flower shop with over 10 years of history in Tallinn. We started with a small studio and great love for flowers, and today we delight thousands of clients across Estonia.',
+                p2: 'We create each bouquet with soul, using only fresh flowers from the best nurseries in Holland. Our florists are true masters of their craft, trained in European floristry schools.',
+                p3: 'We believe flowers are the language of emotions. Our mission is to help you express feelings through the beauty of nature.'
+            },
+            guarantees: 'Our Guarantees',
+            stat1: 'years of experience',
+            stat2: 'happy clients',
+            stat3: 'freshness guarantee',
+            stat3days: 'days'
+        },
+        delivery: {
+            title: 'Delivery & Payment',
+            conditions: {
+                title: 'Delivery Terms',
+                zone: { title: 'Delivery Zone:', desc: 'Tallinn and suburbs (15 km radius)' },
+                cost: { title: 'Cost:', desc: 'from €5 (depends on area)' },
+                time: { title: 'Delivery Time:', desc: 'orders before 2PM — same day delivery' },
+                urgent: { title: 'Express Delivery:', desc: 'from 2 hours (+€10)' },
+                payment: { title: 'Payment:', desc: 'cash, card, bank transfer' }
+            },
+            faq: { title: 'Frequently Asked Questions' }
+        },
+        faqs: {
+            1: { q: 'How fast can you deliver?', a: 'For orders before 2PM we deliver same day. Express delivery — from 2 hours.' },
+            2: { q: 'What is your delivery zone?', a: 'We deliver throughout Tallinn and nearby areas within 15 km radius.' },
+            3: { q: 'Can I change bouquet composition?', a: 'Yes, our florists will create a custom composition according to your wishes.' },
+            4: { q: 'How can I pay?', a: 'We accept cash, cards, transfers. Payment on delivery or online.' }
+        },
+        contacts: {
+            title: 'Contacts',
+            connect: 'Contact Us',
+            phone: { title: 'Phone' },
+            address: { title: 'Address' },
+            hours: { title: 'Working Hours', weekdays: 'Mon-Fri: 9:00 - 20:00', weekend: 'Sat-Sun: 10:00 - 18:00' },
+            social: 'Follow Us',
+            form: { title: 'Contact Form' }
+        },
+        modal: {
+            title: 'Order Bouquet',
+            describe: 'Describe desired bouquet',
+            or: 'Or contact us:',
+            call: 'Call'
+        },
+        footer: {
+            tagline: 'Premium flower shop in Tallinn',
+            navigation: 'Navigation',
+            copyright: '© 2026 Florista. All rights reserved.'
+        }
+    },
+    et: {
+        nav: {
+            home: 'Avaleht',
+            catalog: 'Kataloog',
+            about: 'Meist',
+            delivery: 'Kohaletoimetamine',
+            contacts: 'Kontaktid'
+        },
+        hero: {
+            title: 'Lilled, mis<br/>räägivad sinu eest',
+            subtitle: 'Värsked kompositsioonid kohaletoimetamisega Tallinnas 2 tunni jooksul'
+        },
+        buttons: {
+            order: 'Telli Lillekimp',
+            catalog: 'Vaata Kataloogi',
+            allBouquets: 'Kõik Lillekimbud →',
+            back: 'Tagasi Kataloogi',
+            details: 'Detailid'
+        },
+        advantages: {
+            delivery: { title: '2-Tunnine Kohaletoimetamine', desc: 'Kiire kohaletoimetamine Tallinnas' },
+            fresh: { title: 'Värsked Lilled', desc: 'Igapäevased tarned Hollandist' },
+            florists: { title: 'Kogenud Floriste', desc: 'Üle 10 aasta ilu loomist' },
+            guarantee: { title: 'Kvaliteedigarantii', desc: 'Lillede asendamine 3 päeva jooksul' }
+        },
+        sections: {
+            popular: 'Populaarsed Lillekimbud',
+            howWeWork: 'Kuidas Me Töötame',
+            reviews: 'Klientide Arvustused'
+        },
+        steps: {
+            step1: { title: 'Vali Lillekimp', desc: 'Kataloogist või kirjelda oma soove' },
+            step2: { title: 'Tee Tellimus', desc: 'Võrgus, telefoni teel või WhatsApp' },
+            step3: { title: 'Me Loome', desc: 'Floristid seavad armastusega' },
+            step4: { title: 'Kohaletoimetamine', desc: 'Määratud ajal ja kohas' }
+        },
+        trust: {
+            title: 'Meile Usaldavad Tuhanded',
+            years: 'aastat tööd',
+            clients: 'õnnelikku klienti',
+            guarantee: 'värskuse garantii'
+        },
+        form: {
+            title: 'Jäta Päring',
+            name: 'Teie Nimi',
+            phone: 'Telefon',
+            message: 'Sõnum',
+            submit: 'Saada Päring'
+        },
+        catalog: {
+            title: 'Lillekimpude Kataloog',
+            filters: {
+                all: 'Kõik Lillekimbud',
+                romance: 'Romantikaks',
+                birthday: 'Sünnipäevaks',
+                wedding: 'Pulmaks'
+            }
+        },
+        bouquets: {
+            1: { name: 'Romantiline Tunnustus', desc: 'Õrn rooside ja eukalüpti kompositsioon', includes: 'Sisaldab:' },
+            2: { name: 'Kevadine Värskus', desc: 'Särav tulpide ja freesiate segu', includes: 'Sisaldab:' },
+            3: { name: 'Pöönide Luksus', desc: 'Premium pöönide kompositsioon', includes: 'Sisaldab:' },
+            4: { name: 'Päikseline Päev', desc: 'Rõõmsameelne päevalillede kompositsioon', includes: 'Sisaldab:' },
+            5: { name: 'Õrnust', desc: 'Pastellkompositsioon roosades toonides', includes: 'Sisaldab:' },
+            6: { name: 'Klassika', desc: 'Elegantne punaste rooside lillekimp', includes: 'Sisaldab:' }
+        },
+        reviews: {
+            1: { name: 'Anna K.', text: 'Tellisin lillekimbu ema sünnipäevaks. Toimetati õigel ajal, lilled super värsked! Tänan!' },
+            2: { name: 'Dmitri M.', text: 'Suurepärane teenindus! Aitasid lillekimpu valida, tarnisid 2 tunniga. Tüdruksõber oli vaimustuses.' },
+            3: { name: 'Elena R.', text: 'Väga ilusad kompositsioonid, professionaalsed floristid. Tellin veel!' }
+        },
+        about: {
+            title: 'Meist',
+            history: {
+                title: 'Meie Lugu',
+                p1: 'Florista on perelillede pood, millel on üle 10-aastane ajalugu Tallinnas. Alustasime väikese stuudioga ja suure armastusega lillede vastu, täna rõõmustame tuhandeid kliente üle Eesti.',
+                p2: 'Loome iga lillekimbu hingega, kasutades ainult värsked lilled parimatest Hollandi aiandusettevõtetest. Meie floristid on tõelised oma ala meistrid, koolitatud Euroopa floristika koolides.',
+                p3: 'Usume, et lilled on emotsioonide keel. Seepärast on meie missioon aidata teil väljendada tundeid looduse ilu kaudu.'
+            },
+            guarantees: 'Meie Garantiid',
+            stat1: 'aastat kogemust',
+            stat2: 'õnnelikku klienti',
+            stat3: 'värskuse garantii',
+            stat3days: 'päeva'
+        },
+        delivery: {
+            title: 'Kohaletoimetamine ja Maksmine',
+            conditions: {
+                title: 'Kohaletoimetamise Tingimused',
+                zone: { title: 'Kohaletoimetamise Tsoon:', desc: 'Tallinn ja äärelinnad (15 km raadius)' },
+                cost: { title: 'Maksumus:', desc: 'alates €5 (sõltub piirkonnast)' },
+                time: { title: 'Kohaletoimetamise Aeg:', desc: 'tellimused enne kella 14 — samal päeval kohaletoimetamine' },
+                urgent: { title: 'Kiire Kohaletoimetamine:', desc: 'alates 2 tunnist (+€10)' },
+                payment: { title: 'Maksmine:', desc: 'sularaha, kaart, pangaülekanne' }
+            },
+            faq: { title: 'Korduma Kippuvad Küsimused' }
+        },
+        faqs: {
+            1: { q: 'Kui kiiresti saate tarnida?', a: 'Tellimustele enne kella 14 tarnime samal päeval. Kiire kohaletoimetamine — alates 2 tunnist.' },
+            2: { q: 'Milline on teie kohaletoimetamise tsoon?', a: 'Toimetame kogu Tallinnas ja lähialadel 15 km raadiuses.' },
+            3: { q: 'Kas saan lillekimbu koostist muuta?', a: 'Jah, meie floristid loovad individuaalse kompositsiooni vastavalt teie soovidele.' },
+            4: { q: 'Kuidas saan maksta?', a: 'Võtame vastu sularaha, kaarte, ülekandeid. Maksmine kohaletoimetamisel või võrgus.' }
+        },
+        contacts: {
+            title: 'Kontaktid',
+            connect: 'Võtke Meiega Ühendust',
+            phone: { title: 'Telefon' },
+            address: { title: 'Aadress' },
+            hours: { title: 'Tööaeg', weekdays: 'E-R: 9:00 - 20:00', weekend: 'L-P: 10:00 - 18:00' },
+            social: 'Jälgi Meid',
+            form: { title: 'Kontaktvorm' }
+        },
+        modal: {
+            title: 'Telli Lillekimp',
+            describe: 'Kirjelda soovitud lillekimpu',
+            or: 'Või võtke meiega ühendust:',
+            call: 'Helista'
+        },
+        footer: {
+            tagline: 'Premium lillede pood Tallinnas',
+            navigation: 'Navigeerimine',
+            copyright: '© 2026 Florista. Kõik õigused kaitstud.'
+        }
+    }
+};
 
-function filter(cat){
-  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'))
-  event.target.classList.add('active')
+// Bouquet Data
+const bouquets = [
+    {
+        id: 1,
+        name: 'romantic',
+        price: '45€',
+        image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600',
+        category: 'romance',
+        includes: ['25 роз', '15 tulips', 'Зелень', 'Упаковка', 'Открытка']
+    },
+    {
+        id: 2,
+        name: 'spring',
+        price: '38€',
+        image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600',
+        category: 'birthday',
+        includes: ['15 тюльпанов', '10 фрезий', 'Декор', 'Упаковка']
+    },
+    {
+        id: 3,
+        name: 'luxury',
+        price: '65€',
+        image: 'https://images.unsplash.com/photo-1464297162577-f5295c892194?w=600',
+        category: 'wedding',
+        includes: ['Пионы сезонные', 'Розы кустовые', 'Эвкалипт', 'Лента']
+    },
+    {
+        id: 4,
+        name: 'sunny',
+        price: '42€',
+        image: 'https://images.unsplash.com/photo-1588161900075-6c23f0a555f9?w=600',
+        category: 'birthday',
+        includes: ['7 подсолнухов', 'Хризантемы', 'Зелень', 'Упаковка']
+    },
+    {
+        id: 5,
+        name: 'tender',
+        price: '52€',
+        image: 'https://images.unsplash.com/photo-1487070183336-b863922373d4?w=600',
+        category: 'romance',
+        includes: ['Розы пионовидные', 'Эустома', 'Матиола', 'Упаковка']
+    },
+    {
+        id: 6,
+        name: 'classic',
+        price: '55€',
+        image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600',
+        category: 'all',
+        includes: ['35 красных роз', 'Зелень', 'Упаковка люкс', 'Открытка']
+    }
+];
 
-  document.querySelectorAll('.bouquet').forEach(b=>{
-    b.style.display = cat==='all'||b.classList.contains(cat)?'block':'none'
-  })
+// Current Language
+let currentLang = 'ru';
+
+// Change Language Function
+function changeLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Update all translatable elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const keys = el.getAttribute('data-i18n').split('.');
+        let value = translations[lang];
+        keys.forEach(key => value = value[key]);
+        
+        if (el.innerHTML.includes('<br')) {
+            el.innerHTML = value;
+        } else {
+            el.textContent = value;
+        }
+    });
+    
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const keys = el.getAttribute('data-i18n-placeholder').split('.');
+        let value = translations[lang];
+        keys.forEach(key => value = value[key]);
+        el.placeholder = value;
+    });
+    
+    // Reload dynamic content
+    renderPopularBouquets();
+    renderCatalogBouquets();
+    renderReviews();
+    renderFAQ();
 }
+
+// Show Page Function
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.getElementById(page + 'Page').classList.remove('hidden');
+    window.scrollTo(0, 0);
+}
+
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    menu.classList.toggle('hidden');
+    icon.textContent = menu.classList.contains('hidden') ? '☰' : '✕';
+}
+
+// Modal Functions
+function openModal() {
+    document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+}
+
+// Submit Form
+function submitForm(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const message = `Новая заявка с сайта:\nИмя: ${formData.get('name') || e.target[0].value}\nТелефон: ${formData.get('phone') || e.target[1].value}\nСообщение: ${formData.get('message') || e.target[2].value}`;
+    window.open(`https://t.me/yourbotname?text=${encodeURIComponent(message)}`, '_blank');
+    e.target.reset();
+    closeModal();
+}
+
+// Render Popular Bouquets
+function renderPopularBouquets() {
+    const container = document.getElementById('popularBouquets');
+    container.innerHTML = bouquets.slice(0, 3).map(b => `
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-64 overflow-hidden">
+                <img src="${b.image}" alt="${translations[currentLang].bouquets[b.id].name}" class="w-full h-full object-cover img-hover">
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-medium mb-2 text-gray-800">${translations[currentLang].bouquets[b.id].name}</h3>
+                <p class="text-gray-600 mb-4">${translations[currentLang].bouquets[b.id].desc}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-light text-rose-600">${b.price}</span>
+                    <button onclick="showBouquet(${b.id})" class="bg-rose-600 text-white px-6 py-2 rounded-full hover:bg-rose-700 transition">
+                        ${translations[currentLang].buttons.details}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Render Catalog Bouquets
+function renderCatalogBouquets(filter = 'all') {
+    const container = document.getElementById('catalogBouquets');
+    const filtered = filter === 'all' ? bouquets : bouquets.filter(b => b.category === filter);
+    
+    container.innerHTML = filtered.map(b => `
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-64 overflow-hidden">
+                <img src="${b.image}" alt="${translations[currentLang].bouquets[b.id].name}" class="w-full h-full object-cover img-hover">
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-medium mb-2 text-gray-800">${translations[currentLang].bouquets[b.id].name}</h3>
+                <p class="text-gray-600 mb-4">${translations[currentLang].bouquets[b.id].desc}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-light text-rose-600">${b.price}</span>
+                    <button onclick="showBouquet(${b.id})" class="bg-rose-600 text-white px-6 py-2 rounded-full hover:bg-rose-700 transition">
+                        ${translations[currentLang].buttons.details}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Filter Bouquets
+function filterBouquets(category) {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-rose-600', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-700');
+    });
+    event.target.classList.add('active', 'bg-rose-600', 'text-white');
+    event.target.classList.remove('bg-white', 'text-gray-700');
+    
+    renderCatalogBouquets(category);
+}
+
+// Show Bouquet Detail
+function showBouquet(id) {
+    const bouquet = bouquets.find(b => b.id === id);
+    const container = document.getElementById('bouquetDetail');
+    
+    container.innerHTML = `
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="rounded-2xl overflow-hidden">
+                <img src="${bouquet.image}" alt="${translations[currentLang].bouquets[id].name}" class="w-full h-full object-cover">
+            </div>
+            
+            <div>
+                <h1 class="text-4xl font-light mb-4 text-gray-800">${translations[currentLang].bouquets[id].name}</h1>
+                <div class="text-3xl font-light text-rose-600 mb-6">${bouquet.price}</div>
+                <p class="text-gray-700 text-lg mb-8">${translations[currentLang].bouquets[id].desc}</p>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-medium mb-4 text-gray-800">${translations[currentLang].bouquets[id].includes}</h3>
+                    <div class="space-y-2">
+                        ${bouquet.includes.map(item => `
+                            <div class="flex items-center text-gray-700">
+                                <span class="text-rose-600 mr-3">✓</span>
+                                ${item}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <button onclick="openModal()" class="w-full bg-rose-600 text-white py-4 rounded-full hover:bg-rose-700 transition text-lg">
+                        ${translations[currentLang].buttons.order}
+                    </button>
+                    <a href="https://wa.me/3725551234" target="_blank" class="w-full border-2 border-green-600 text-green-600 py-4 rounded-full hover:bg-green-50 transition text-lg flex items-center justify-center">
+                        <span class="mr-2">💬</span> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    showPage('bouquet');
+}
+
+// Render Reviews
+function renderReviews() {
+    const container = document.getElementById('reviewsContainer');
+    container.innerHTML = [1, 2, 3].map(i => `
+        <div class="bg-white p-8 rounded-2xl shadow-md">
+            <div class="flex mb-4">
+                ${'★'.repeat(5).split('').map(() => '<span class="text-yellow-400 text-xl">★</span>').join('')}
+            </div>
+            <p class="text-gray-700 mb-4 italic">"${translations[currentLang].reviews[i].text}"</p>
+            <p class="font-medium text-gray-800">${translations[currentLang].reviews[i].name}</p>
+        </div>
+    `).join('');
+}
+
+// Render FAQ
+function renderFAQ() {
+    const container = document.getElementById('faqContainer');
+    container.innerHTML = [1, 2, 3, 4].map(i => `
+        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+            <button onclick="toggleFAQ(${i})" class="w-full px-6 py-4 flex justify-between items-center hover:bg-rose-50 transition">
+                <span class="font-medium text-gray-800 text-left">${translations[currentLang].faqs[i].q}</span>
+                <span class="faq-icon-${i} text-rose-600 text-xl transition-transform">▼</span>
+            </button>
+            <div id="faq-${i}" class="hidden px-6 pb-4 text-gray-700">
+                ${translations[currentLang].faqs[i].a}
+            </div>
+        </div>
+    `).join('');
+}
+
+// Toggle FAQ
+function toggleFAQ(id) {
+    const content = document.getElementById(`faq-${id}`);
+    const icon = document.querySelector(`.faq-icon-${id}`);
+    
+    content.classList.toggle('hidden');
+    icon.classList.toggle('rotate-180');
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    renderPopularBouquets();
+    renderCatalogBouquets();
+    renderReviews();
+    renderFAQ();
+});
 </script>
 
 </body>
