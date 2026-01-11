@@ -3,88 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Florista — Flowers in Tallinn</title>
+<title>Florista — Flower shop Tallinn</title>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box }
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  color:#333;
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:#222;
   line-height:1.6;
 }
-section { padding:100px 20px }
-.container { max-width:1200px; margin:0 auto }
-h2 { text-align:center; font-size:2.5rem; margin-bottom:50px; color:#f43f5e }
+img{max-width:100%;display:block}
+section{padding:100px 20px}
+.container{max-width:1200px;margin:0 auto}
 
-.hero {
+/* ================= LANG ================= */
+.lang{
+  position:fixed;
+  top:20px;
+  right:20px;
+  display:flex;
+  gap:10px;
+  z-index:999;
+}
+.lang button{
+  padding:8px 14px;
+  border:none;
+  border-radius:20px;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* ================= HERO ================= */
+.hero{
   min-height:100vh;
-  background:linear-gradient(135deg,#f43f5e,#fb7185);
+  background:linear-gradient(135deg,#e11d48,#fb7185);
   color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
 }
-.hero h1 { font-size:3rem; margin-bottom:20px }
-.hero p { font-size:1.3rem; margin-bottom:40px }
-
-.btn {
-  padding:15px 40px;
+.hero h1{font-size:3.2rem;margin-bottom:20px}
+.hero p{font-size:1.3rem;margin-bottom:40px}
+.btn{
+  padding:16px 42px;
   background:#fff;
-  color:#f43f5e;
+  color:#e11d48;
   border-radius:50px;
   font-weight:600;
-  display:inline-block;
+  text-decoration:none;
 }
 
-.lang {
-  position:fixed;
-  top:20px;
-  right:20px;
-  display:flex;
-  gap:10px;
-  z-index:100;
+/* ================= HOW ================= */
+.how{
+  background:#fff;
 }
-.lang button {
-  padding:8px 14px;
+.how-item{
+  text-align:center;
+  margin-bottom:50px;
+}
+.how-num{
+  font-size:4rem;
+  color:#fda4af;
+  margin-bottom:10px;
+}
+
+/* ================= CATALOG ================= */
+.filters{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  margin-bottom:50px;
+  flex-wrap:wrap;
+}
+.filters button{
+  padding:12px 24px;
   border:none;
-  border-radius:20px;
+  border-radius:30px;
+  background:#f3f4f6;
   cursor:pointer;
 }
+.filters button.active{
+  background:#e11d48;
+  color:#fff;
+}
 
-.grid {
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:30px;
 }
 
-.card {
+.card{
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+.card-body{padding:25px}
+.price{color:#e11d48;font-weight:700;font-size:1.2rem}
+
+/* ================= REVIEWS ================= */
+.reviews{
+  background:#fff1f2;
+}
+.review{
   background:#fff;
   padding:30px;
   border-radius:20px;
+}
+
+/* ================= TRUST ================= */
+.trust{
+  background:#e11d48;
+  color:#fff;
   text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+.trust-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:40px;
 }
 
-.review {
-  background:#fff;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
+/* ================= CONTACTS ================= */
+.contacts p{text-align:center;font-size:1.1rem}
 
-footer {
+/* ================= FOOTER ================= */
+footer{
   background:#111;
   color:#aaa;
   text-align:center;
-  padding:40px 20px;
+  padding:40px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+  .hero h1{font-size:2.2rem}
+  section{padding:70px 20px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LANGUAGE SWITCH -->
+<!-- LANG -->
 <div class="lang">
   <button onclick="setLang('ru')">RU</button>
   <button onclick="setLang('ee')">EE</button>
@@ -93,90 +157,131 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <div>
-    <h1 data-lang="ru">Цветы, которые говорят за вас</h1>
-    <h1 data-lang="ee">Lilled, mis räägivad teie eest</h1>
-    <h1 data-lang="en">Flowers that speak for you</h1>
+<div>
+  <h1 data-lang="ru">Цветы, которые говорят за вас</h1>
+  <h1 data-lang="ee">Lilled, mis räägivad teie eest</h1>
+  <h1 data-lang="en">Flowers that speak for you</h1>
 
-    <p data-lang="ru">Доставка по Таллину за 2 часа</p>
-    <p data-lang="ee">Tarne Tallinnas 2 tunniga</p>
-    <p data-lang="en">Delivery in Tallinn within 2 hours</p>
+  <p data-lang="ru">Доставка по Таллину за 2 часа</p>
+  <p data-lang="ee">Tarne Tallinnas 2 tunniga</p>
+  <p data-lang="en">Delivery in Tallinn within 2 hours</p>
 
-    <a href="#bouquets" class="btn" data-lang="ru">Выбрать букет</a>
-    <a href="#bouquets" class="btn" data-lang="ee">Vali kimp</a>
-    <a href="#bouquets" class="btn" data-lang="en">Choose bouquet</a>
-  </div>
+  <a href="#catalog" class="btn">Каталог</a>
+</div>
 </section>
 
-<!-- BOUQUETS -->
-<section id="bouquets">
+<!-- HOW -->
+<section class="how">
 <div class="container">
-<h2 data-lang="ru">Наши букеты</h2>
-<h2 data-lang="ee">Meie kimbud</h2>
-<h2 data-lang="en">Our bouquets</h2>
+<h2>Как мы работаем</h2>
+
+<div class="how-item">
+<div class="how-num">01</div>
+<h3>Выберите букет</h3>
+<p>Из каталога или опишите пожелания</p>
+</div>
+
+<div class="how-item">
+<div class="how-num">02</div>
+<h3>Оформите заказ</h3>
+<p>Онлайн или по телефону</p>
+</div>
+
+<div class="how-item">
+<div class="how-num">03</div>
+<h3>Мы создаем</h3>
+<p>Флористы собирают с душой</p>
+</div>
+
+<div class="how-item">
+<div class="how-num">04</div>
+<h3>Доставим</h3>
+<p>В указанное время</p>
+</div>
+
+</div>
+</section>
+
+<!-- CATALOG -->
+<section id="catalog">
+<div class="container">
+<h2>Каталог букетов</h2>
+
+<div class="filters">
+<button class="active" onclick="filter('all')">Все</button>
+<button onclick="filter('romance')">Романтика</button>
+<button onclick="filter('birthday')">ДР</button>
+<button onclick="filter('wedding')">Свадьба</button>
+</div>
 
 <div class="grid">
-  <div class="card">
-    🌹
-    <h3 data-lang="ru">Романтика — 45€</h3>
-    <h3 data-lang="ee">Romantika — 45€</h3>
-    <h3 data-lang="en">Romance — 45€</h3>
-  </div>
 
-  <div class="card">
-    🌸
-    <h3 data-lang="ru">Весенний — 38€</h3>
-    <h3 data-lang="ee">Kevadine — 38€</h3>
-    <h3 data-lang="en">Spring — 38€</h3>
-  </div>
+<div class="card bouquet romance">
+<img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600">
+<div class="card-body">
+<h3>Романтичное признание</h3>
+<p class="price">45€</p>
+</div>
+</div>
 
-  <div class="card">
-    💐
-    <h3 data-lang="ru">Премиум — 65€</h3>
-    <h3 data-lang="ee">Premium — 65€</h3>
-    <h3 data-lang="en">Premium — 65€</h3>
-  </div>
+<div class="card bouquet birthday">
+<img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600">
+<div class="card-body">
+<h3>Весенняя свежесть</h3>
+<p class="price">38€</p>
+</div>
+</div>
+
+<div class="card bouquet wedding">
+<img src="https://images.unsplash.com/photo-1464297162577-f5295c892194?w=600">
+<div class="card-body">
+<h3>Пионовая роскошь</h3>
+<p class="price">65€</p>
+</div>
+</div>
+
 </div>
 </div>
 </section>
 
 <!-- REVIEWS -->
-<section style="background:#f8f8f8">
+<section class="reviews">
 <div class="container">
-<h2 data-lang="ru">Отзывы</h2>
-<h2 data-lang="ee">Tagasiside</h2>
-<h2 data-lang="en">Reviews</h2>
+<h2>Отзывы клиентов</h2>
 
 <div class="grid">
-  <div class="review">
-    ⭐⭐⭐⭐⭐
-    <p data-lang="ru">Очень красивые цветы, спасибо!</p>
-    <p data-lang="ee">Väga ilusad lilled!</p>
-    <p data-lang="en">Beautiful flowers, thank you!</p>
-  </div>
-
-  <div class="review">
-    ⭐⭐⭐⭐⭐
-    <p data-lang="ru">Быстрая доставка, рекомендую</p>
-    <p data-lang="ee">Kiire tarne</p>
-    <p data-lang="en">Fast delivery</p>
-  </div>
+<div class="review">
+⭐⭐⭐⭐⭐
+<p>Очень красивые цветы, доставили вовремя!</p>
+<strong>Анна К.</strong>
 </div>
+
+<div class="review">
+⭐⭐⭐⭐⭐
+<p>Доставили за 2 часа, девушка в восторге</p>
+<strong>Дмитрий М.</strong>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+<div class="container trust-grid">
+<div><h2>10+</h2><p>лет работы</p></div>
+<div><h2>5000+</h2><p>клиентов</p></div>
+<div><h2>100%</h2><p>гарантия свежести</p></div>
 </div>
 </section>
 
 <!-- CONTACTS -->
-<section>
+<section class="contacts">
 <div class="container">
-<h2 data-lang="ru">Контакты</h2>
-<h2 data-lang="ee">Kontakt</h2>
-<h2 data-lang="en">Contacts</h2>
-
-<p style="text-align:center">
-📞 +372 555 1234<br>
-📍 Tallinn<br>
-📧 info@florista.ee
-</p>
+<h2>Контакты</h2>
+<p>📞 +372 555 1234</p>
+<p>📍 Tallinn</p>
+<p>📧 info@florista.ee</p>
 </div>
 </section>
 
@@ -185,12 +290,21 @@ Florista © 2026
 </footer>
 
 <script>
-function setLang(lang) {
-  document.querySelectorAll('[data-lang]').forEach(el => {
-    el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
-  });
+function setLang(lang){
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.style.display = el.dataset.lang===lang?'block':'none'
+  })
 }
-setLang('ru');
+setLang('ru')
+
+function filter(cat){
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'))
+  event.target.classList.add('active')
+
+  document.querySelectorAll('.bouquet').forEach(b=>{
+    b.style.display = cat==='all'||b.classList.contains(cat)?'block':'none'
+  })
+}
 </script>
 
 </body>
