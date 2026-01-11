@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Florista — цветы в Таллине</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f43f5e, #fb7185);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      opacity: 0.95;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 40px;
+      background: white;
+      color: #f43f5e;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 100px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: #f43f5e;
+    }
+
+    /* ADVANTAGES */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .card span {
+      font-size: 3rem;
+    }
+
+    /* FORM */
+    .form-section {
+      background: #f43f5e;
+      color: white;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #f43f5e;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <h1>Цветы, которые говорят за вас</h1>
+      <p>Свежие букеты с доставкой по Таллину</p>
+      <a href="#order" class="btn">Заказать букет</a>
+    </div>
+  </section>
+
+  <!-- ADVANTAGES -->
+  <section>
+    <div class="container">
+      <h2>Почему выбирают нас</h2>
+
+      <div class="grid">
+        <div class="card">
+          <span>🌸</span>
+          <h3>Свежие цветы</h3>
+          <p>Поставки каждое утро</p>
+        </div>
+
+        <div class="card">
+          <span>🚚</span>
+          <h3>Быстрая доставка</h3>
+          <p>По Таллину за 2 часа</p>
+        </div>
+
+        <div class="card">
+          <span>💐</span>
+          <h3>Индивидуально</h3>
+          <p>Собираем под ваш запрос</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section" id="order">
+    <div class="container">
+      <h2 style="color:white">Оставить заявку</h2>
+
+      <form id="form">
+        <input type="text" placeholder="Ваше имя" required>
+        <input type="tel" placeholder="Телефон" required>
+        <textarea placeholder="Какой букет нужен?" required></textarea>
+        <button type="submit">Отправить</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Florista © 2026 · Tallinn</p>
+    <p>Телефон: +372 555 1234</p>
+  </footer>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Заявка отправлена! Мы свяжемся с вами.');
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
