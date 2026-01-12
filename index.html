@@ -182,7 +182,57 @@
         }
         .noise {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-     }
+        }
+        /* Стильные фоны для страниц */
+.page-gradient-1 {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 25%, #fcd34d 50%, #fbbf24 75%, #f59e0b 100%);
+}
+
+.page-gradient-2 {
+    background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 25%, #a78bfa 50%, #8b5cf6 75%, #7c3aed 100%);
+}
+
+.page-gradient-3 {
+    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 25%, #f87171 50%, #ef4444 75%, #dc2626 100%);
+}
+
+.page-gradient-4 {
+    background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 25%, #60a5fa 50%, #3b82f6 75%, #2563eb 100%);
+}
+
+.page-gradient-5 {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 25%, #6ee7b7 50%, #34d399 75%, #10b981 100%);
+}
+
+/* Анимированный градиент для страниц */
+@keyframes pageGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-page-bg {
+    background-size: 200% 200%;
+    animation: pageGradient 15s ease infinite;
+}
+
+/* Паттерн с точками */
+.dots-pattern {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Волнистый паттерн */
+.wave-pattern {
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.05) 10px,
+            rgba(255, 255, 255, 0.05) 20px
+        );
+}
     </style>
 </head>
 <body class="flower-pattern noise">
@@ -417,7 +467,7 @@
 
 <!-- BOUQUET DETAIL PAGE -->
 <div id="bouquetPage" class="page hidden">
-    <div class="pt-24 pb-20 bg-white min-h-screen">
+    <div class="pt-24 pb-20 min-h-screen animated-page-bg wave-pattern" style="background: linear-gradient(135deg, #fecaca, #fca5a5, #f87171, #ef4444, #dc2626);">
         <div class="max-w-6xl mx-auto px-4">
             <button onclick="showPage('catalog')" class="text-rose-600 mb-8 flex items-center hover:underline text-lg font-semibold">
                 ← <span data-i18n="buttons.back">Назад в каталог</span>
@@ -430,7 +480,7 @@
 
 <!-- ABOUT PAGE -->
 <div id="aboutPage" class="page hidden">
-    <div class="pt-24 pb-20 bg-gradient-to-b from-rose-50 to-white min-h-screen">
+    <div class="pt-24 pb-20 min-h-screen animated-page-bg dots-pattern" style="background: linear-gradient(135deg, #ddd6fe, #c4b5fd, #a78bfa, #8b5cf6, #7c3aed);">
         <div class="max-w-4xl mx-auto px-4">
             <h1 class="text-6xl font-bold text-center mb-16 text-gradient" data-i18n="about.title">🌟 О нас</h1>
             
@@ -470,7 +520,7 @@
 
 <!-- DELIVERY PAGE -->
 <div id="deliveryPage" class="page hidden">
-    <div class="pt-24 pb-20 bg-white min-h-screen">
+    <div class="pt-24 pb-20 min-h-screen animated-page-bg wave-pattern" style="background: linear-gradient(135deg, #bfdbfe, #93c5fd, #60a5fa, #3b82f6, #2563eb);">
         <div class="max-w-4xl mx-auto px-4">
             <h1 class="text-6xl font-bold text-center mb-16 text-gradient" data-i18n="delivery.title">🚚 Доставка и оплата</h1>
             
@@ -495,7 +545,7 @@
 
 <!-- CONTACTS PAGE -->
 <div id="contactsPage" class="page hidden">
-    <div class="pt-24 pb-20 bg-gradient-to-b from-rose-50 to-white min-h-screen">
+    <div class="pt-24 pb-20 min-h-screen animated-page-bg dots-pattern" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0, #6ee7b7, #34d399, #10b981);">
         <div class="max-w-6xl mx-auto px-4">
             <h1 class="text-6xl font-bold text-center mb-16 text-gradient" data-i18n="contacts.title">📞 Контакты</h1>
             
